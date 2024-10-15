@@ -6,6 +6,11 @@ var direction = false;
 var music_play = false;
 var interval_left = false;
 var interval_right = false;
+var isJumping = false;  // Track if Mario is currently jumping
+var jumpHeight = 150;   // Maximum height of the jump
+var gravity = 10;       // Speed of the fall
+var jumpSpeed = 15;     // Speed of the jump
+var currentJumpHeight = 0; // Track how high Mario has jumped
 
 
 if (ismobile) scroll_x -= 170;
@@ -17,6 +22,31 @@ $('.tweet').click(function () {
     window.open('https://twitter.com/intent/tweet?text=' + document.title + '&tw_p=tweetbutton&url=' + document.location.href);
     return false;
 });
+function jump() {
+    if (isJumping) return;  // If already jumping, do nothing
+
+    isJumping = true;       // Start jump
+    var originalBottom = parseInt($('#mario').css('bottom'));  // Get Mario's starting position
+    
+    var jumpInterval = setInterval(function () {
+        if (currentJumpHeight < jumpHeight) {
+            currentJumpHeight += jumpSpeed;
+            $('#mario').css('bottom', (originalBottom + currentJumpHeight) + 'px');
+        } else {
+            clearInterval(jumpInterval);  // Stop going up and start falling down
+            var fallInterval = setInterval(function () {
+                if (currentJumpHeight > 0) {
+                    currentJumpHeight -= gravity;
+                    $('#mario').css('bottom', (originalBottom + currentJumpHeight) + 'px');
+                } else {
+                    clearInterval(fallInterval);
+                    isJumping = false;  // Allow jumping again
+                }
+            }, 20);
+        }
+    }, 20);
+}
+
 
 function moveTo(pos) {
 
@@ -115,6 +145,8 @@ $(function () {
             moveLeft();
         } else if (e.keyCode == 39) {
             moveRight();
+        } else if (e.keyCode == 38) { // Up arrow key
+            jump();  // Trigger jump
         }
     });
 
