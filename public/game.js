@@ -50,7 +50,7 @@ function jump() {
 
 function moveTo(pos) {
 
-    diff = ismobile ? 13 : 15;
+    diff = ismobile ? 13 : 20;
 
     if (pos == 'left') {
 
@@ -120,7 +120,7 @@ function moveRight() {
     if (!interval_right) {
         interval_right = setInterval(function () {
             moveTo('right');
-        }, 100);
+        }, 70);
     }
 }
 
