@@ -13,7 +13,7 @@ var jumpSpeed = 15;     // Speed of the jump
 var currentJumpHeight = 0; // Track how high Mario has jumped
 
 
-if (ismobile) scroll_x -= 170;
+if (ismobile) scroll_x -= 175;
 else scroll_x -= 240;
 
 $('#scroll').css('left', scroll_x + 'px');
