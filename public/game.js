@@ -18,6 +18,7 @@ else scroll_x -= 240;
 
 $('#scroll').css('left', scroll_x + 'px');
 
+
 $('.tweet').click(function () {
     window.open('https://twitter.com/intent/tweet?text=' + document.title + '&tw_p=tweetbutton&url=' + document.location.href);
     return false;
